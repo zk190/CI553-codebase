@@ -16,7 +16,7 @@ import java.util.*;
  *  instances of a Basket as they are progressed through the system.
  * These stages are:
  * <BR><B>Waiting to be processed<BR>
- * Currently being picked<BR>
+ * Currently being packed<BR>
  * Waiting to be collected<BR></B>
  * @author  Mike Smith University of Brighton
  * @version 3.0
@@ -24,7 +24,7 @@ import java.util.*;
  
 public class Order implements OrderProcessing
 {
-  private enum State {Waiting, BeingPicked, ToBeCollected };
+  private enum State {Waiting, BeingPacked, ToBeCollected };
   /**
    * Wraps a Basket and it state into a folder
    */
@@ -96,20 +96,20 @@ public class Order implements OrderProcessing
   }
 
   /**
-   * Returns an order to pick from the warehouse.
-   * @return An order to pick or null if no order
+   * Returns an order to pack from the warehouse.
+   * @return An order to pack or null if no order
    */
-  public synchronized Basket getOrderToPick()
+  public synchronized Basket getOrderToPack()
          throws OrderException
   {
-    DEBUG.trace( "DEBUG: Get order to pick" );
+    DEBUG.trace( "DEBUG: Get order to pack" );
     Basket foundWaiting = null;
     for ( Folder bws : folders )
     {
       if ( bws.getState() == State.Waiting )
       {
         foundWaiting = bws.getBasket();
-        bws.newState( State.BeingPicked );
+        bws.newState( State.BeingPacked );
         break;
       }
     }
@@ -118,19 +118,19 @@ public class Order implements OrderProcessing
 
   /**
    * Informs the order processing system that the order has been
-   * picked and the products are now being delivered to the
+   * packed and the products are now being delivered to the
    * collection desk
-   * @param  orderNum The order that has been picked
+   * @param  orderNum The order that has been packed
    * @return true Order in system, false no such order
    */
-  public synchronized boolean informOrderPicked( int orderNum )
+  public synchronized boolean informOrderPacked( int orderNum )
          throws OrderException
   {
-    DEBUG.trace( "DEBUG: Order picked [%d]", orderNum );
+    DEBUG.trace( "DEBUG: Order packed [%d]", orderNum );
     for ( int i=0; i < folders.size(); i++)
     {
       if ( folders.get(i).getBasket().getOrderNum() == orderNum && 
-           folders.get(i).getState()                == State.BeingPicked )
+           folders.get(i).getState()                == State.BeingPacked )
       {
         folders.get(i).newState( State.ToBeCollected );
         return true;
@@ -166,12 +166,12 @@ public class Order implements OrderProcessing
    * This consists of a map with the following keys:
    *<PRE>
    * Key "Waiting"        a list of orders waiting to be processed
-   * Key "BeingPicked"    a list of orders that are currently being picked
+   * Key "BeingPacked"    a list of orders that are currently being packed
    * Key "ToBeCollected"  a list of orders that can now be collected
    * Associated with each key is a List&lt;Integer&gt; of order numbers.
    * Note: Each order number will be unique number.
    * </PRE>
-   * @return a Map with the keys: "Waiting", "BeingPicked", "ToBeCollected"
+   * @return a Map with the keys: "Waiting", "BeingPacked", "ToBeCollected"
    */
   public synchronized Map<String, List<Integer> > getOrderState()
          throws OrderException
@@ -180,7 +180,7 @@ public class Order implements OrderProcessing
     Map < String, List<Integer> > res = new HashMap<>();
 
     res.put( "Waiting",       orderNums(State.Waiting) );
-    res.put( "BeingPicked",   orderNums(State.BeingPicked) );
+    res.put( "BeingPacked",   orderNums(State.BeingPacked) );
     res.put( "ToBeCollected", orderNums(State.ToBeCollected) );
 
     return res;
