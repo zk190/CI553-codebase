@@ -1,69 +1,56 @@
 package clients;
+
 import clients.backDoor.BackDoorController;
 import clients.backDoor.BackDoorModel;
 import clients.backDoor.BackDoorView;
 import clients.cashier.CashierController;
 import clients.cashier.CashierModel;
 import clients.cashier.CashierView;
-import clients.collection.CollectController;
-import clients.collection.CollectModel;
-import clients.collection.CollectView;
 import clients.customer.CustomerController;
 import clients.customer.CustomerModel;
 import clients.customer.CustomerView;
-import clients.shopDisplay.DisplayController;
-import clients.shopDisplay.DisplayModel;
-import clients.shopDisplay.DisplayView;
-import clients.warehousePick.PickController;
-import clients.warehousePick.PickModel;
-import clients.warehousePick.PickView;
+import clients.packing.PackingController;
+import clients.packing.PackingModel;
+import clients.packing.PackingView;
 import middle.LocalMiddleFactory;
 import middle.MiddleFactory;
-
 import javax.swing.*;
 import java.awt.*;
 
-
 /**
- * Starts all the clients  as a single application.
- * Good for testing the system using a single application but no use of RMI.
+ * Starts all the clients (user interface)  as a single application.
+ * Good for testing the system using a single application.
  * @author  Mike Smith University of Brighton
  * @version 2.0
+ * @author  Shine University of Brighton
+ * @version year-2024
  */
+
 class Main
 {
-  // Change to false to reduce the number of duplicated clients
-
-  private final static boolean many = false;        // Many clients? (Or minimal clients)
-
   public static void main (String args[])
   {
     new Main().begin();
   }
 
   /**
-   * Starts test system (Non distributed)
+   * Starts the system (Non distributed)
    */
   public void begin()
   {
     //DEBUG.set(true); /* Lots of debug info */
     MiddleFactory mlf = new LocalMiddleFactory();  // Direct access
- 
     startCustomerGUI_MVC( mlf );
-    if ( many ) 
-     startCustomerGUI_MVC( mlf );
     startCashierGUI_MVC( mlf );
-    startCashierGUI_MVC( mlf );
+    startCashierGUI_MVC( mlf ); // you can create multiple clients
+    startPackingGUI_MVC( mlf );
     startBackDoorGUI_MVC( mlf );
-    if ( many ) 
-      startPickGUI_MVC( mlf );
-    startPickGUI_MVC( mlf );
-    startDisplayGUI_MVC( mlf );
-    if ( many ) 
-      startDisplayGUI_MVC( mlf );
-    startCollectionGUI_MVC( mlf );
   }
   
+  /**
+  * start the Customer client, -search product
+  * @param mlf A factory to create objects to access the stock list
+  */
   public void startCustomerGUI_MVC(MiddleFactory mlf )
   {
     JFrame  window = new JFrame();
@@ -76,12 +63,12 @@ class Main
     CustomerController cont  = new CustomerController( model, view );
     view.setController( cont );
 
-    model.addObserver( view );       // Add observer to the model
+    model.addObserver( view );       // Add observer to the model, ---view is observer, model is Observable
     window.setVisible(true);         // start Screen
   }
 
   /**
-   * start the cashier client
+   * start the cashier client - customer check stock, buy product
    * @param mlf A factory to create objects to access the stock list
    */
   public void startCashierGUI_MVC(MiddleFactory mlf )
@@ -101,6 +88,32 @@ class Main
     model.askForUpdate();            // Initial display
   }
 
+  /**
+   * start the Packing client - for warehouse staff to pack the bought order for customer, one order at a time
+   * @param mlf A factory to create objects to access the stock list
+   */
+  
+  public void startPackingGUI_MVC(MiddleFactory mlf)
+  {
+    JFrame  window = new JFrame();
+
+    window.setTitle( "Packing Client MVC");
+    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+    Dimension pos = PosOnScrn.getPos();
+    
+    PackingModel model      = new PackingModel(mlf);
+    PackingView view        = new PackingView( window, mlf, pos.width, pos.height );
+    PackingController cont  = new PackingController( model, view );
+    view.setController( cont );
+
+    model.addObserver( view );       // Add observer to the model
+    window.setVisible(true);         // Make window visible
+  }
+  
+  /**
+   * start the BackDoor client - store staff to check and update stock
+   * @param mlf A factory to create objects to access the stock list
+   */
   public void startBackDoorGUI_MVC(MiddleFactory mlf )
   {
     JFrame  window = new JFrame();
@@ -118,57 +131,4 @@ class Main
     window.setVisible(true);         // Make window visible
   }
   
-
-  public void startPickGUI_MVC(MiddleFactory mlf )
-  {
-    JFrame  window = new JFrame();
-
-    window.setTitle( "Pick Client MVC");
-    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-    Dimension pos = PosOnScrn.getPos();
-    
-    PickModel model      = new PickModel(mlf);
-    PickView view        = new PickView( window, mlf, pos.width, pos.height );
-    PickController cont  = new PickController( model, view );
-    view.setController( cont );
-
-    model.addObserver( view );       // Add observer to the model
-    window.setVisible(true);         // Make window visible
-  }
-  
-  public void startDisplayGUI_MVC(MiddleFactory mlf )
-  {
-    JFrame  window = new JFrame();
-
-    window.setTitle( "Display Client MVC");
-    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-    Dimension pos = PosOnScrn.getPos();
-    
-    DisplayModel model      = new DisplayModel(mlf);
-    DisplayView view        = new DisplayView( window, mlf, pos.width, pos.height );
-    DisplayController cont  = new DisplayController( model, view );
-    view.setController( cont );
-
-    model.addObserver( view );       // Add observer to the model
-    window.setVisible(true);         // Make window visible
-  }
-
-
-  public void startCollectionGUI_MVC(MiddleFactory mlf )
-  {
-    JFrame  window = new JFrame();
-
-    window.setTitle( "Collect Client MVC");
-    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-    Dimension pos = PosOnScrn.getPos();
-    
-    CollectModel model      = new CollectModel(mlf);
-    CollectView view        = new CollectView( window, mlf, pos.width, pos.height );
-    CollectController cont  = new CollectController( model, view );
-    view.setController( cont );
-
-    model.addObserver( view );       // Add observer to the model
-    window.setVisible(true);         // Make window visible
-  }
-
 }
