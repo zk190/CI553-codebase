@@ -95,11 +95,11 @@ public class OrderX implements OrderProcessing
    * @return An order to pick.
    */
 
-  public synchronized Basket getOrderToPick()
+  public synchronized Basket getOrderToPack()
          throws OrderException
   {
     // You need to modify and fill in the correct code
-    DEBUG.trace( "DEBUG: Get order to pick" );
+    DEBUG.trace( "DEBUG: Get order to pack" );
     if ( theWaitingTray.size() > 0 )
     {
       Basket process = theWaitingTray.remove(0);
@@ -117,7 +117,7 @@ public class OrderX implements OrderProcessing
    * @return true :: Order in system, false -:: no such order
    */
 
-  public synchronized boolean informOrderPicked( int orderNum )
+  public synchronized boolean informOrderPacked( int orderNum )
          throws OrderException
   {
     // You need to modify and fill in the correct code
