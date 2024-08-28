@@ -1,6 +1,7 @@
-###### CI553-miniStore (simplied from a catshop system from previous year CW)
-###### Release for the 2024-CI553 cohort. This is a deliberately convoluted legacy codebase for the CI553 coursework.
-
+###### CI553-miniStore, release for the 2024-CI553 cohort.
+###### This is a deliberately convoluted legacy codebase for the CI553 coursework.
+###### This version was simplied from catshop system of previous year CW.
+###### This version is all-in-one server configurion, with customer, cashier, packing, and backDoor clients.
 ## Notes
 
 The file DataBase.txt must contain Derby to work with Derby database
@@ -15,9 +16,8 @@ REPLACE %DERBY_HOME% with the path to the base of the Derby database
 
 ### Eclipse
 To use the Derby database, after importing the project,
-Move the file DataBase.txt to be in the toplevel directory of your project 
-(with src and the JRE System library)
-Copy also the directory Images to the same top level directory as DataBase.txt
+Move the file DataBase.txt to be in the toplevel directory of your project.
+Copy the directory Images to the same top level directory as DataBase.txt
 
 Then in Properties -> Resource -> Java Build Path -> Libraries
 Select Add external JARs
