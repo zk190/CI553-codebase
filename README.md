@@ -1,10 +1,10 @@
 ###### CI553-miniStore, release for the 2024-CI553 cohort.
 ###### This is a deliberately convoluted legacy codebase for the CI553 coursework.
-###### This version was simplied from catshop system of previous year CW.
+###### This version was simplified from catshop system of the previous year CW.
 ###### This version is all-in-one server configurion, with customer, cashier, packing, and backDoor clients.
 ## Notes
 
-The file DataBase.txt must contain Derby to work with Derby database
+The file DataBase.txt must contain Derby to work with the Derby database
 
 ### BlueJ
 To use the Derby database, you must add in 
