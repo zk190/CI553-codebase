@@ -27,7 +27,7 @@ REPLACE %DERBY_HOME% with the path to the base of the Derby database
 
 ### IntelliJ 
 
-1. File -> New -> project from version control. (Click next until complete)
+1. File -> New -> project from version control -> fill the URl with https://github.com/Shine-SJF/CI553-CW-miniStore.git (Click next until complete)
 2. Run (both of which will fail) `clients.Setup.main()` and `clients.Main.main()`.
 3. Run -> Edit configurations, and:
 4. select Setup, modify options -> modify classpath -> + -> include -> `\lib\derby.jar` (located in lib/db-derby-10.14.2.0-lib/)
