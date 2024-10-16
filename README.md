@@ -30,8 +30,8 @@ REPLACE %DERBY_HOME% with the path to the base of the Derby database
 1. File -> New -> project from version control. (Click next until complete)
 2. Run (both of which will fail) `clients.Setup.main()` and `clients.Main.main()`.
 3. Run -> Edit configurations, and:
-3.1 select Setup, modify options -> modify classpath -> + -> include -> `\lib\derby.jar` (located in lib/db-derby-10.14.2.0-lib/)
-3.2 select Main,  modify options -> modify classpath -> + -> include -> `\lib\derby.jar` (located in lib/db-derby-10.14.2.0-lib/)
+4. 3.1 select Setup, modify options -> modify classpath -> + -> include -> `\lib\derby.jar` (located in lib/db-derby-10.14.2.0-lib/)
+5. 3.2 select Main,  modify options -> modify classpath -> + -> include -> `\lib\derby.jar` (located in lib/db-derby-10.14.2.0-lib/)
 
 ## Run
 
