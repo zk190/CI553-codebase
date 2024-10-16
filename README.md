@@ -25,7 +25,7 @@ Select Add external JARs
 
 REPLACE %DERBY_HOME% with the path to the base of the Derby database
 
-### IntelliJ 2022.1.4+
+### IntelliJ 
 
 1. File -> New -> project from version control. (Click next until complete)
 2. Run (both of which will fail) `clients.Setup.main()` and `clients.Main.main()`.
