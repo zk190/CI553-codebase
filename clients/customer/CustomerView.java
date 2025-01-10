@@ -13,6 +13,8 @@ import java.util.Observer;
 
 /**
  * Implements the Customer view.
+ * change 1 line 36 jbutton 
+ * line 77 check name button add colour and stuff and change position 
  */
 
 public class CustomerView implements Observer
@@ -21,6 +23,7 @@ public class CustomerView implements Observer
   {
     public static final String CHECK  = "Check";
     public static final String CLEAR  = "Clear";
+    
   }
 
   private static final int H = 300;       // Height of window pixels
@@ -32,6 +35,7 @@ public class CustomerView implements Observer
   private final JTextArea   theOutput  = new JTextArea();
   private final JScrollPane theSP      = new JScrollPane();
   private final JButton     theBtCheck = new JButton( Name.CHECK );
+  private final JButton     theBtCheckName = new JButton(Name.CHECK);// add new button 
   private final JButton     theBtClear = new JButton( Name.CLEAR );
 
   private Picture thePicture = new Picture(80,80);
@@ -41,7 +45,7 @@ public class CustomerView implements Observer
   /**
    * Construct the view
    * @param rpc   Window in which to construct
-   * @param mf    Factor to deliver order and stock objects
+   * @param mf    Factor to deliver order and stock objects3
    * @param x     x-cordinate of position of window on screen 
    * @param y     y-cordinate of position of window on screen  
    */
@@ -69,13 +73,26 @@ public class CustomerView implements Observer
 
     theBtCheck.setBounds( 16, 25+60*0, 80, 40 );    // Check button
     theBtCheck.addActionListener(                   // Call back code
-      e -> cont.doCheck( theInput.getText() ) );
+      e -> cont.doCheck( theInput.getText() ) );      // gettext refers to text field on customer client mvc
     cp.add( theBtCheck );                           //  Add to canvas
+    
+    theBtCheckName.setBounds( 16, 25+60*1, 80, 40 );    // Check button
+    theBtCheckName.setBackground(Color.BLUE);
+    theBtCheckName.setForeground(Color.RED); //for swing do like this 
+    theBtCheck.addActionListener(                   // Call back code
+      e -> cont.doCheckByName( theInput.getText() ) ); // found in controller
+    cp.add( theBtCheckName);                           //  Add to canvas
+
 
     theBtClear.setBounds( 16, 25+60*1, 80, 40 );    // Clear button
     theBtClear.addActionListener(                   // Call back code
       e -> cont.doClear() );
-    cp.add( theBtClear );                           //  Add to canvas
+    cp.add( theBtClear );    //  Add to canvas
+    
+    theBtClear.setBounds( 16, 25+60*1, 80, 40 );    // Clear button
+    theBtClear.addActionListener(                   // Call back code
+      e -> cont.doClear() );
+    cp.add( theBtClear );                          
 
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area
     theAction.setText( " " );                       // blank

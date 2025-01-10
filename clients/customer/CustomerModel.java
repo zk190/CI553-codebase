@@ -13,6 +13,7 @@ import java.util.Observable;
 
 /**
  * Implements the Model of the customer client
+ * line 60 Stock Exists? do checl calls this method - communicates with database
  */
 public class CustomerModel extends Observable
 {
@@ -63,7 +64,7 @@ public class CustomerModel extends Observable
     int    amount  = 1;                         //  & quantity
     try
     {
-      if ( theStock.exists( pn ) )              // Stock Exists?
+      if ( theStock.exists( pn ) )              // Stock Exists? do checl calls this method - communicates with database
       {                                         // T
         Product pr = theStock.getDetails( pn ); //  Product
         if ( pr.getQuantity() >= amount )       //  In stock?
